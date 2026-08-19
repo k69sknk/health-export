@@ -27,7 +27,39 @@ Passerelle Apple Watch → iPhone → serveur pour exporter les données de cour
 - [x] Carte MapKit live sur iPhone (polyline, départ, position)
 - [x] Bouton « course de test » envoyant un payload complet au webhook
 - [x] Catalogue de tout ce qui est exportable (onglet Exports)
-- [x] Testé en simulateur : paire iPhone 16 Pro + Watch Series 10 appairée, `WCSession` joignable, webhook Home Assistant validé (HTTP 200)
+- [x] Layout Watch compact refait (plus de chevauchement des tuiles)
+- [x] Erreurs et statut d’envoi affichés sur la Watch (plus d’échec silencieux)
+- [x] Logs console `[HE]` / `[HE-iOS]` des deux côtés pour le débogage
+- [x] Test E2E en simulateur validé : séance auto 45 s → 141 points de métriques + GPS → **webhook Home Assistant HTTP 200**
+
+## Tests en simulateur
+
+Paire dédiée : `HealthExport iPhone` + `HealthExport Watch` (créée appairée).
+
+```bash
+# 1. Démarrer la paire (iPhone D'ABORD, sinon la paire reste "disconnected")
+xcrun simctl boot <IPHONE_UDID> && xcrun simctl boot <WATCH_UDID>
+
+# 2. GPS simulé : le fournir à l'iPHONE (la Watch simulée hérite de la position
+#    du téléphone apparié ; `simctl location` sur la Watch ne fait rien)
+xcrun simctl location <IPHONE_UDID> start 47.4736,-0.5517 47.4748,-0.5490 \
+  47.4761,-0.5463 47.4774,-0.5436 47.4787,-0.5409 --speed 4
+
+# 3. Lancer l'iPhone (console capturée)
+xcrun simctl launch --console-pty <IPHONE_UDID> com.github.k69sknk.healthexport
+
+# 4. Lancer la Watch : séance auto 45 s + envoi direct webhook (secours simu)
+SIMCTL_CHILD_HE_AUTO_WORKOUT=1 SIMCTL_CHILD_HE_DIRECT_HTTP=1 \
+  xcrun simctl launch --console-pty <WATCH_UDID> com.github.k69sknk.healthexport.watchkitapp
+```
+
+Au premier lancement, une feuille HealthKit s’affiche sur la Watch : **faire défiler la feuille vers le haut** pour révéler le bouton « Autoriser » (hors champ initial). L’autorisation est mémorisée ensuite.
+
+### Limites connues du simulateur
+
+- **WatchConnectivity ne fonctionne pas entre deux simulateurs** (`sendMessageData` échoue, `transferUserInfo` jamais livré, `isReachable` incohérent) même avec une paire « connected ». Le lien Watch → iPhone doit être validé **sur appareils réels**. En DEBUG, `HE_DIRECT_HTTP=1` fait expédier le bilan directement au webhook par la Watch pour tester la chaîne malgré tout.
+- `HKWorkoutRouteBuilder.finishRoute` échoue avec « No data was added to the workout route » en simulateur — toléré (le tracé est de toute façon dans la série temporelle et le GPX), à revalider sur appareil réel.
+- Le GPS simulé n’est actif que si la séance démarre pendant la fenêtre de simulation (redémarrer `simctl location` avant chaque run).
 
 ### Hot reload (Inject / InjectionNext)
 
@@ -43,7 +75,7 @@ Limites : corps de fonctions et vues seulement ; toute modification de signature
 
 ### Reste à faire
 
-- [ ] Corriger le layout de l’écran Watch (chevauchements sur les tuiles)
+- [ ] **Valider WatchConnectivity sur appareils réels** (bloquant — non testable en simulateur) + signature/provisioning
 - [ ] File réseau persistante iPhone → serveur (retry + backoff si injoignable)
 - [ ] Partage live entre abonnés : notifications à l’arrivée d’une séance (MVP possible via automations Home Assistant ; sinon serveur + APNs/Firebase)
 - [ ] Export FIT (actuellement placeholder dans les réglages)
@@ -51,7 +83,15 @@ Limites : corps de fonctions et vues seulement ; toute modification de signature
 - [ ] Intervalle d’envoi adaptatif (économie de batterie)
 - [ ] Splits automatiques par km
 - [ ] Sortir l’URL du webhook du code (config non versionnée)
-- [ ] Tests sur appareils réels + validation App Store (HealthKit review)
+- [ ] Validation App Store (HealthKit review)
+
+### À revoir
+
+- **URL du webhook Home Assistant en clair** dans `Shared/PipelineSettings.swift` (valeur par défaut versionnée) — à externaliser avant toute mise en publique du dépôt.
+- `HKWorkoutRouteBuilder` vide en simulateur : vérifier sur appareil réel que `insertRouteData` alimente bien la route (les `try?` masquent les erreurs).
+- Feuille d’autorisation HealthKit tronquée sur Watch 46 mm simulée (bouton « Autoriser » hors champ, nécessite un scroll) — vérifier le comportement sur vraie Watch.
+- Le tampon Watch (`transferUserInfo`) n’a pas pu être validé en simulateur ; tester le scénario « iPhone éteint pendant la course » sur matériel réel.
+- Le contournement `HE_DIRECT_HTTP` est DEBUG-only : ne pas l’activer dans un schéma de release.
 
 ## Build
 

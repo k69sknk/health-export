@@ -9,11 +9,24 @@ struct WatchRootView: View {
             header
             primaryMetrics
             secondaryMetrics
+            statusLine
             actionButton
         }
         .padding(.horizontal, 6)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Palette.void)
+        .onAppear {
+            #if DEBUG
+            if ProcessInfo.processInfo.environment["HE_AUTO_WORKOUT"] == "1" {
+                Task {
+                    try? await Task.sleep(for: .seconds(2))
+                    await recorder.start()
+                    try? await Task.sleep(for: .seconds(45))
+                    await recorder.stop()
+                }
+            }
+            #endif
+        }
     }
 
     private var header: some View {
@@ -49,6 +62,23 @@ struct WatchRootView: View {
             secondaryTile(title: "KCAL", value: recorder.activeCalories.map { "\(Int($0))" } ?? "—")
             secondaryTile(title: "BUFFER", value: "\(recorder.buffered)")
         }
+    }
+
+    private var statusLine: some View {
+        Group {
+            if let error = recorder.lastError {
+                Text(error)
+                    .foregroundStyle(Palette.rust)
+            } else {
+                Text(recorder.lastSent)
+                    .foregroundStyle(Palette.paperDim)
+            }
+        }
+        .font(.system(.caption2, design: .rounded, weight: .medium))
+        .lineLimit(2)
+        .minimumScaleFactor(0.7)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 4)
     }
 
     private var actionButton: some View {

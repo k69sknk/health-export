@@ -51,6 +51,7 @@ final class WatchGateway: NSObject, ObservableObject, WCSessionDelegate {
             isReachable = session.isReachable
             isPaired = session.isPaired
             isWatchAppInstalled = session.isWatchAppInstalled
+            print("[HE-iOS] WCSession état=\(activationState.rawValue) appairée=\(session.isPaired) appWatch=\(session.isWatchAppInstalled) joignable=\(session.isReachable) erreur=\(error?.localizedDescription ?? "non")")
         }
     }
 

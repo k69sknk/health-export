@@ -106,6 +106,7 @@ final class GatewayStore: ObservableObject {
     }
 
     private func handleStarted(_ payload: WorkoutStartedEnvelope) {
+        print("[HE-iOS] Séance reçue de la Watch: \(payload.workoutId)")
         var run = ActiveRun(id: payload.workoutId, type: payload.type, start: payload.startDate)
         if let location = payload.startLocation {
             run.points.append(location)
@@ -114,6 +115,9 @@ final class GatewayStore: ObservableObject {
     }
 
     private func handleLive(_ payload: LiveMetricsEnvelope) {
+        if liveHistory.count.isMultiple(of: 20) {
+            print("[HE-iOS] Live #\(liveHistory.count) — FC \(payload.data.heartRate.map { "\(Int($0))" } ?? "—"), GPS \(payload.data.location != nil ? "oui" : "non")")
+        }
         liveHistory.append(payload)
         liveHistory = Array(liveHistory.suffix(200))
 
@@ -137,6 +141,7 @@ final class GatewayStore: ObservableObject {
     }
 
     private func handleCompleted(_ payload: WorkoutCompletedEnvelope) {
+        print("[HE-iOS] Bilan reçu: \(payload.workoutId), \(payload.timeSeries.count) points")
         completedRuns.insert(payload, at: 0)
 
         if activeRun?.id == payload.workoutId {
@@ -150,8 +155,10 @@ final class GatewayStore: ObservableObject {
         Task {
             do {
                 try await dispatcher.sendCompleted(payload, settings: settings)
+                print("[HE-iOS] Bilan expédié → \(settings.endpoint)")
                 lastError = nil
             } catch {
+                print("[HE-iOS] Échec expédition bilan: \(error.localizedDescription)")
                 lastError = error.localizedDescription
             }
         }
