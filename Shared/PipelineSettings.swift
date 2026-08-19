@@ -105,7 +105,7 @@ struct PipelineSettings: Codable, Equatable {
         mode: .batch,
         liveTransport: .websocket,
         intervalSeconds: 5,
-        endpoint: "https://example.com/api/webhook/YOUR_WEBHOOK_ID",
+        endpoint: "",
         headers: [],
         hmacSecret: "",
         userId: "runner",

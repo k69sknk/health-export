@@ -82,12 +82,11 @@ Limites : corps de fonctions et vues seulement ; toute modification de signature
 - [ ] Export auto Strava / Intervals.icu en fin de course
 - [ ] Intervalle d’envoi adaptatif (économie de batterie)
 - [ ] Splits automatiques par km
-- [ ] Sortir l’URL du webhook du code (config non versionnée)
 - [ ] Validation App Store (HealthKit review)
 
 ### À revoir
 
-- **URL du webhook Home Assistant en clair** dans `Shared/PipelineSettings.swift` (valeur par défaut versionnée) — à externaliser avant toute mise en publique du dépôt.
+- L’endpoint est vide par défaut (`Shared/PipelineSettings.swift`) : chacun configure son serveur dans les réglages de l’app.
 - `HKWorkoutRouteBuilder` vide en simulateur : vérifier sur appareil réel que `insertRouteData` alimente bien la route (les `try?` masquent les erreurs).
 - Feuille d’autorisation HealthKit tronquée sur Watch 46 mm simulée (bouton « Autoriser » hors champ, nécessite un scroll) — vérifier le comportement sur vraie Watch.
 - Le tampon Watch (`transferUserInfo`) n’a pas pu être validé en simulateur ; tester le scénario « iPhone éteint pendant la course » sur matériel réel.
