@@ -1,0 +1,84 @@
+name: HealthExport
+options:
+  bundleIdPrefix: com.github.k69sknk
+  deploymentTarget:
+    iOS: "17.0"
+    watchOS: "10.0"
+  xcodeVersion: "16.0"
+  createIntermediateGroups: true
+settings:
+  SWIFT_VERSION: "5.0"
+  IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+  WATCHOS_DEPLOYMENT_TARGET: "10.0"
+targets:
+  HealthExport:
+    type: application
+    platform: iOS
+    sources:
+      - path: HealthExport
+      - path: Shared
+    dependencies:
+      - target: HealthExportWatch
+        embed: true
+    info:
+      path: HealthExport/Info.plist
+      properties:
+        CFBundleDisplayName: Health Export
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        LSRequiresIPhoneOS: true
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        NSHealthShareUsageDescription: Health Export lit vos données de course sur la Watch pour les transmettre à votre serveur. Rien n’est publié ailleurs.
+        NSHealthUpdateUsageDescription: Health Export enregistre la séance dans Santé afin de conserver le tracé et les métriques.
+        NSLocationWhenInUseUsageDescription: Le GPS sert à tracer le plan de la course.
+    entitlements:
+      path: HealthExport/HealthExport.entitlements
+      properties:
+        com.apple.developer.healthkit: true
+        com.apple.developer.healthkit.access: []
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.github.k69sknk.healthexport
+      PRODUCT_NAME: Health Export
+      TARGETED_DEVICE_FAMILY: "1,2"
+      ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+      GENERATE_INFOPLIST_FILE: false
+      CODE_SIGN_STYLE: Automatic
+      INFOPLIST_FILE: HealthExport/Info.plist
+      UIBackgroundModes: []
+  HealthExportWatch:
+    type: application
+    platform: watchOS
+    sources:
+      - path: HealthExportWatch
+      - path: Shared
+    info:
+      path: HealthExportWatch/Info.plist
+      properties:
+        CFBundleDisplayName: Health Export
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        WKApplication: true
+        WKCompanionAppBundleIdentifier: com.github.k69sknk.healthexport
+        NSHealthShareUsageDescription: Health Export lit vos données de course sur la Watch pour les transmettre à votre iPhone et à votre serveur. Rien n’est publié ailleurs.
+        NSHealthUpdateUsageDescription: Health Export enregistre la séance de course dans Santé afin de conserver le tracé et les métriques.
+        NSLocationWhenInUseUsageDescription: Le GPS de la Watch est utilisé pour tracer le plan de la course.
+    entitlements:
+      path: HealthExportWatch/HealthExportWatch.entitlements
+      properties:
+        com.apple.developer.healthkit: true
+        com.apple.developer.healthkit.access: []
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.github.k69sknk.healthexport.watchkitapp
+      PRODUCT_NAME: Health Export Watch
+      GENERATE_INFOPLIST_FILE: false
+      CODE_SIGN_STYLE: Automatic
+      INFOPLIST_FILE: HealthExportWatch/Info.plist
+      ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+      TARGETED_DEVICE_FAMILY: "4"
