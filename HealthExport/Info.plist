@@ -22,6 +22,11 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
 	<key>NSHealthShareUsageDescription</key>
 	<string>Health Export lit vos données de course sur la Watch pour les transmettre à votre serveur. Rien n’est publié ailleurs.</string>
 	<key>NSHealthUpdateUsageDescription</key>

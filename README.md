@@ -31,6 +31,8 @@ Passerelle Apple Watch → iPhone → serveur pour exporter les données de cour
 - [x] Erreurs et statut d’envoi affichés sur la Watch (plus d’échec silencieux)
 - [x] Logs console `[HE]` / `[HE-iOS]` des deux côtés pour le débogage
 - [x] Test E2E en simulateur validé : séance auto 45 s → 141 points de métriques + GPS → **webhook Home Assistant HTTP 200**
+- [x] **File réseau persistante iPhone → serveur** : les bilans en échec sont écrits sur disque (`PayloadQueue`) et renvoyés avec backoff exponentiel (5 s → 15 min), survie au redémarrage de l’app, bouton « Réessayer » + compteur sur le tableau de bord. Testé : échec → file → redémarrage app → vidange automatique dès que le serveur répond (HTTP 200)
+- [x] ATS : `NSAllowsLocalNetworking` activé (endpoints HTTP locaux, ex. serveur sur le LAN)
 
 ## Tests en simulateur
 
@@ -76,7 +78,6 @@ Limites : corps de fonctions et vues seulement ; toute modification de signature
 ### Reste à faire
 
 - [ ] **Valider WatchConnectivity sur appareils réels** (bloquant — non testable en simulateur) + signature/provisioning
-- [ ] File réseau persistante iPhone → serveur (retry + backoff si injoignable)
 - [ ] Partage live entre abonnés : notifications à l’arrivée d’une séance (MVP possible via automations Home Assistant ; sinon serveur + APNs/Firebase)
 - [ ] Export FIT (actuellement placeholder dans les réglages)
 - [ ] Export auto Strava / Intervals.icu en fin de course

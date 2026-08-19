@@ -120,6 +120,24 @@ struct DashboardView: View {
                     .lineLimit(2)
                     .minimumScaleFactor(0.75)
             }
+
+            if bridge.queuedCount > 0 {
+                HStack(spacing: 10) {
+                    Label("\(bridge.queuedCount) en file", systemImage: "tray.full.fill")
+                        .font(Typeface.body(13, weight: .semibold))
+                        .foregroundStyle(Palette.chartreuse)
+                    if let next = bridge.queue.nextAttemptAt {
+                        Text("prochain essai \(next.formatted(date: .omitted, time: .standard))")
+                            .font(Typeface.body(12))
+                            .foregroundStyle(Palette.paperDim)
+                    }
+                    Spacer()
+                    Button("Réessayer") { bridge.retryNow() }
+                        .font(Typeface.body(12, weight: .semibold))
+                        .buttonStyle(.bordered)
+                        .tint(Palette.chartreuse)
+                }
+            }
         }
         .padding(16)
         .background(

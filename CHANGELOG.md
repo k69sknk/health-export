@@ -3,6 +3,10 @@
 ## [Unreleased] — 2026-08-19
 
 ### Ajouté
+- **File réseau persistante iPhone → serveur** (`PayloadQueue`) : bilans `workout_completed` en échec écrits sur disque, retry automatique avec backoff exponentiel (5 s → 15 min), survie au redémarrage, compteur + bouton « Réessayer » sur le tableau de bord. Seuls les bilans sont conservés (les métriques live sont éphémères).
+- `NSAllowsLocalNetworking` (ATS) pour autoriser les endpoints HTTP locaux.
+- Hooks de test DEBUG côté iPhone : `HE_ENDPOINT` (force l’endpoint) et `HE_TEST_PAYLOAD=1` (expédie un bilan de test au démarrage).
+
 - Logs console `[HE]` (Watch) et `[HE-iOS]` (iPhone) : demande d’autorisation, démarrage/arrêt de séance, envois, réceptions, expédition webhook.
 - Affichage des erreurs et du statut d’envoi directement sur l’écran de la Watch (`WatchRootView`) — fini les échecs silencieux.
 - Log d’activation `WCSession` côté iPhone (état, appairage, joignabilité).

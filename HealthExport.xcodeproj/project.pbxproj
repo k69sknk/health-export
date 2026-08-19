@@ -14,6 +14,7 @@
 		24B7825623741A7E2E2003E8 /* WorkoutPayloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4727BAAC1EF23BB94890730 /* WorkoutPayloads.swift */; };
 		35136CA42F753779F2962B57 /* WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2249A8532471F1898CA0D663 /* WatchApp.swift */; };
 		5AF33F7C22D7A11D18FF47B9 /* WorkoutRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826E5652E93B6C67728F273 /* WorkoutRecorder.swift */; };
+		650FECDEF4E3B6BB14C33957 /* PayloadQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9178C62E1E4EDF7216FAD98A /* PayloadQueue.swift */; };
 		657A5341EBC4846119184B36 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8173E9781B0C39A7B665FE89 /* RootView.swift */; };
 		756AF2ECC214365F382A464C /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF66BE4F760621B3FDC504E /* DashboardView.swift */; };
 		7C5F61A5F512409639AE4A0A /* PipelineSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467AAE005DD0EE5AA8C38E4 /* PipelineSettings.swift */; };
@@ -72,6 +73,7 @@
 		83B3DD02707A2C942D349CB0 /* HealthExport.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HealthExport.entitlements; sourceTree = "<group>"; };
 		8467AAE005DD0EE5AA8C38E4 /* PipelineSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineSettings.swift; sourceTree = "<group>"; };
 		8F65693920D81CF9C8A5696D /* PipelineSettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineSettingsStore.swift; sourceTree = "<group>"; };
+		9178C62E1E4EDF7216FAD98A /* PayloadQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayloadQueue.swift; sourceTree = "<group>"; };
 		9826E5652E93B6C67728F273 /* WorkoutRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRecorder.swift; sourceTree = "<group>"; };
 		9B00321439809C717FDAFE2D /* JSONCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCoding.swift; sourceTree = "<group>"; };
 		AAF66BE4F760621B3FDC504E /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				177FF2D58FC49D5B409347C3 /* NetworkDispatcher.swift */,
+				9178C62E1E4EDF7216FAD98A /* PayloadQueue.swift */,
 				EEA367E8EB5713D7749D27A1 /* WatchGateway.swift */,
 			);
 			path = Services;
@@ -296,6 +299,7 @@
 				9D085E6E25C504BAEFC5464D /* JSONCoding.swift in Sources */,
 				B4622EB98765E78066177720 /* LiveMapView.swift in Sources */,
 				0DE5D680E802B69A6EAD4465 /* NetworkDispatcher.swift in Sources */,
+				650FECDEF4E3B6BB14C33957 /* PayloadQueue.swift in Sources */,
 				7C5F61A5F512409639AE4A0A /* PipelineSettings.swift in Sources */,
 				C6B2040B7A608FABD9E73E97 /* PipelineSettingsStore.swift in Sources */,
 				657A5341EBC4846119184B36 /* RootView.swift in Sources */,

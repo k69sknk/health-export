@@ -47,6 +47,8 @@ targets:
         NSHealthShareUsageDescription: Health Export lit vos données de course sur la Watch pour les transmettre à votre serveur. Rien n’est publié ailleurs.
         NSHealthUpdateUsageDescription: Health Export enregistre la séance dans Santé afin de conserver le tracé et les métriques.
         NSLocationWhenInUseUsageDescription: Le GPS sert à tracer le plan de la course.
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
     entitlements:
       path: HealthExport/HealthExport.entitlements
       properties:

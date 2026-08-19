@@ -13,12 +13,16 @@ struct ActiveRun {
 final class GatewayStore: ObservableObject {
     let gateway = WatchGateway()
     let dispatcher = NetworkDispatcher()
+    let queue = PayloadQueue()
 
     @Published var settings: PipelineSettings = SettingsStore.load()
     @Published var liveHistory: [LiveMetricsEnvelope] = []
     @Published var completedRuns: [WorkoutCompletedEnvelope] = []
     @Published var activeRun: ActiveRun?
     @Published var lastError: String?
+    @Published var queuedCount = 0
+
+    private var retryTask: Task<Void, Never>?
 
     init() {
         gateway.onStarted = { [weak self] payload in
@@ -30,10 +34,65 @@ final class GatewayStore: ObservableObject {
         gateway.onCompleted = { [weak self] payload in
             self?.handleCompleted(payload)
         }
+        queue.$items.map(\.count).assign(to: &$queuedCount)
+
+        #if DEBUG
+        // Hook de test simulateur : HE_TEST_PAYLOAD=1 expédie un bilan
+        // de test au démarrage.
+        if ProcessInfo.processInfo.environment["HE_TEST_PAYLOAD"] == "1" {
+            Task {
+                try? await Task.sleep(for: .seconds(2))
+                sendTestPayload()
+            }
+        }
+        #endif
     }
 
     func start() {
+        #if DEBUG
+        // Appliqué ici (après l'écrasement des réglages par RootView) :
+        // HE_ENDPOINT force l'endpoint pour les tests en simulateur.
+        if let endpoint = ProcessInfo.processInfo.environment["HE_ENDPOINT"], !endpoint.isEmpty {
+            settings.endpoint = endpoint
+        }
+        #endif
         gateway.activate()
+        startRetryLoop()
+    }
+
+    func retryNow() {
+        Task { await drainQueue() }
+    }
+
+    private func startRetryLoop() {
+        guard retryTask == nil else { return }
+        retryTask = Task { [weak self] in
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(5))
+                await self?.drainQueue()
+            }
+        }
+    }
+
+    private func drainQueue() async {
+        let due = queue.dueItems()
+        guard !due.isEmpty else { return }
+        for item in due {
+            guard let payload = try? JSONCoding.decoder.decode(WorkoutCompletedEnvelope.self, from: item.data) else {
+                queue.remove(item)
+                continue
+            }
+            do {
+                try await dispatcher.sendCompleted(payload, settings: settings)
+                queue.remove(item)
+                print("[HE-iOS] Bilan en file expédié (\(queue.items.count) restant)")
+                lastError = nil
+            } catch {
+                print("[HE-iOS] Échec essai file: \(error.localizedDescription)")
+                queue.markFailed(item)
+                lastError = error.localizedDescription
+            }
+        }
     }
 
     func pushSettings() {
@@ -97,6 +156,7 @@ final class GatewayStore: ObservableObject {
                 lastError = nil
             } catch {
                 lastError = error.localizedDescription
+                queue.enqueue(payload)
             }
         }
     }
@@ -158,8 +218,9 @@ final class GatewayStore: ObservableObject {
                 print("[HE-iOS] Bilan expédié → \(settings.endpoint)")
                 lastError = nil
             } catch {
-                print("[HE-iOS] Échec expédition bilan: \(error.localizedDescription)")
+                print("[HE-iOS] Échec expédition bilan: \(error.localizedDescription) — mis en file")
                 lastError = error.localizedDescription
+                queue.enqueue(payload)
             }
         }
     }
