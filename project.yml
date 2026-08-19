@@ -10,6 +10,13 @@ settings:
   SWIFT_VERSION: "5.0"
   IPHONEOS_DEPLOYMENT_TARGET: "17.0"
   WATCHOS_DEPLOYMENT_TARGET: "10.0"
+packages:
+  Inject:
+    url: https://github.com/krzysztofzablocki/Inject
+    from: 1.6.0
+  InjectionLite:
+    url: https://github.com/johnno1962/InjectionLite
+    from: 2.1.3
 targets:
   HealthExport:
     type: application
@@ -20,6 +27,8 @@ targets:
     dependencies:
       - target: HealthExportWatch
         embed: true
+      - package: Inject
+      - package: InjectionLite
     info:
       path: HealthExport/Info.plist
       properties:
@@ -44,14 +53,19 @@ targets:
         com.apple.developer.healthkit: true
         com.apple.developer.healthkit.access: []
     settings:
-      PRODUCT_BUNDLE_IDENTIFIER: com.github.k69sknk.healthexport
-      PRODUCT_NAME: Health Export
-      TARGETED_DEVICE_FAMILY: "1,2"
-      ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
-      GENERATE_INFOPLIST_FILE: false
-      CODE_SIGN_STYLE: Automatic
-      INFOPLIST_FILE: HealthExport/Info.plist
-      UIBackgroundModes: []
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.github.k69sknk.healthexport
+        PRODUCT_NAME: Health Export
+        TARGETED_DEVICE_FAMILY: "1,2"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        GENERATE_INFOPLIST_FILE: false
+        CODE_SIGN_STYLE: Automatic
+        INFOPLIST_FILE: HealthExport/Info.plist
+        UIBackgroundModes: []
+      configs:
+        Debug:
+          OTHER_LDFLAGS: "-Xlinker -interposable -ObjC -weak_framework XCTest"
+          FRAMEWORK_SEARCH_PATHS: "$(inherited) $(PLATFORM_DIR)/Developer/Library/Frameworks"
   HealthExportWatch:
     type: application
     platform: watchOS
@@ -82,3 +96,15 @@ targets:
       INFOPLIST_FILE: HealthExportWatch/Info.plist
       ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
       TARGETED_DEVICE_FAMILY: "4"
+schemes:
+  HealthExport:
+    build:
+      targets:
+        HealthExport: all
+        HealthExportWatch: all
+    run:
+      config: Debug
+      environmentVariables:
+        - variable: INJECTION_PROJECT_ROOT
+          value: $(SRCROOT)
+          isEnabled: true

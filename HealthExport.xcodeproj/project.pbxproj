@@ -13,7 +13,6 @@
 		21C54071996F8B1E6D214B5C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAA4FE9EDFEE5F45DD65F54 /* SettingsView.swift */; };
 		24B7825623741A7E2E2003E8 /* WorkoutPayloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4727BAAC1EF23BB94890730 /* WorkoutPayloads.swift */; };
 		35136CA42F753779F2962B57 /* WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2249A8532471F1898CA0D663 /* WatchApp.swift */; };
-		542BA1D7700E57E17D280AC9 /* PhoneConnectivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA75B9E03A83C97217A8984 /* PhoneConnectivityService.swift */; };
 		5AF33F7C22D7A11D18FF47B9 /* WorkoutRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826E5652E93B6C67728F273 /* WorkoutRecorder.swift */; };
 		657A5341EBC4846119184B36 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8173E9781B0C39A7B665FE89 /* RootView.swift */; };
 		756AF2ECC214365F382A464C /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF66BE4F760621B3FDC504E /* DashboardView.swift */; };
@@ -22,13 +21,16 @@
 		977F8658FA1B1BB0089517CC /* GatewayStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E38F8F2F639499CAE5813FF /* GatewayStore.swift */; };
 		9820F3890FFE993112F54F20 /* CatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19E84B550FE1F13C636C3A0 /* CatalogView.swift */; };
 		9D085E6E25C504BAEFC5464D /* JSONCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B00321439809C717FDAFE2D /* JSONCoding.swift */; };
+		9D1EEB214735669B305E4FF6 /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = BB9D3005F550CE64516525CC /* Inject */; };
 		A0B0D42A342A7DA145B1C3D3 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C98DEA44E2E936D70A884E /* Theme.swift */; };
 		A873D7C2BB56195BB2792ADE /* WatchGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA367E8EB5713D7749D27A1 /* WatchGateway.swift */; };
 		AC2F803227A5AD8423C129C4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C98DEA44E2E936D70A884E /* Theme.swift */; };
+		B4622EB98765E78066177720 /* LiveMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A98320A40CF69E59997233 /* LiveMapView.swift */; };
 		C0AF7CAC3F028F12225DDB4C /* ExportCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = E356CC66F1769204B1159D3C /* ExportCatalog.swift */; };
 		C6B2040B7A608FABD9E73E97 /* PipelineSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F65693920D81CF9C8A5696D /* PipelineSettingsStore.swift */; };
 		CEAE75AEAA0FCB96816535D1 /* HealthExportApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588BACC9F683B3C60CE7205E /* HealthExportApp.swift */; };
 		D0CE2A7C02B9E546A4C72067 /* WorkoutPayloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4727BAAC1EF23BB94890730 /* WorkoutPayloads.swift */; };
+		D44E90C5E116347873BE643B /* InjectionLite in Frameworks */ = {isa = PBXBuildFile; productRef = 919907E0EE43E5BDCA08903D /* InjectionLite */; };
 		EB618DA53C152BCBEBBE932A /* ExportCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = E356CC66F1769204B1159D3C /* ExportCatalog.swift */; };
 		FFD71B7995C0A46E8B2F62F7 /* HealthExportWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = B6C9A770BDF9576536B4E5B6 /* HealthExportWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -59,7 +61,6 @@
 
 /* Begin PBXFileReference section */
 		177FF2D58FC49D5B409347C3 /* NetworkDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDispatcher.swift; sourceTree = "<group>"; };
-		1FA75B9E03A83C97217A8984 /* PhoneConnectivityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneConnectivityService.swift; sourceTree = "<group>"; };
 		2249A8532471F1898CA0D663 /* WatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchApp.swift; sourceTree = "<group>"; };
 		22C98DEA44E2E936D70A884E /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		33F7E24437B039D79AB139C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -74,6 +75,7 @@
 		9826E5652E93B6C67728F273 /* WorkoutRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRecorder.swift; sourceTree = "<group>"; };
 		9B00321439809C717FDAFE2D /* JSONCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCoding.swift; sourceTree = "<group>"; };
 		AAF66BE4F760621B3FDC504E /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		B0A98320A40CF69E59997233 /* LiveMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveMapView.swift; sourceTree = "<group>"; };
 		B6C9A770BDF9576536B4E5B6 /* HealthExportWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthExportWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4727BAAC1EF23BB94890730 /* WorkoutPayloads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPayloads.swift; sourceTree = "<group>"; };
 		D9946D5E7EF649517B25397D /* WatchRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchRootView.swift; sourceTree = "<group>"; };
@@ -83,6 +85,18 @@
 		EEAA4FE9EDFEE5F45DD65F54 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FC01F26A1BC7301BAE6DD9AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		15CBAC60F738EBC764BD422F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9D1EEB214735669B305E4FF6 /* Inject in Frameworks */,
+				D44E90C5E116347873BE643B /* InjectionLite in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		1255E53788BB8F3D090E631F /* Products */ = {
@@ -109,6 +123,7 @@
 			children = (
 				E19E84B550FE1F13C636C3A0 /* CatalogView.swift */,
 				AAF66BE4F760621B3FDC504E /* DashboardView.swift */,
+				B0A98320A40CF69E59997233 /* LiveMapView.swift */,
 				8173E9781B0C39A7B665FE89 /* RootView.swift */,
 				EEAA4FE9EDFEE5F45DD65F54 /* SettingsView.swift */,
 			);
@@ -153,7 +168,6 @@
 			isa = PBXGroup;
 			children = (
 				177FF2D58FC49D5B409347C3 /* NetworkDispatcher.swift */,
-				1FA75B9E03A83C97217A8984 /* PhoneConnectivityService.swift */,
 				EEA367E8EB5713D7749D27A1 /* WatchGateway.swift */,
 			);
 			path = Services;
@@ -179,6 +193,7 @@
 			buildConfigurationList = 1B287ACEC4E62226E0B9608C /* Build configuration list for PBXNativeTarget "HealthExport" */;
 			buildPhases = (
 				7D6F262EA56D7EBEEF267C0C /* Sources */,
+				15CBAC60F738EBC764BD422F /* Frameworks */,
 				455BDE2C1C1574B3735C896E /* Embed Watch Content */,
 			);
 			buildRules = (
@@ -188,6 +203,8 @@
 			);
 			name = HealthExport;
 			packageProductDependencies = (
+				BB9D3005F550CE64516525CC /* Inject */,
+				919907E0EE43E5BDCA08903D /* InjectionLite */,
 			);
 			productName = HealthExport;
 			productReference = 6A668CD73F169E36E6E76CE5 /* HealthExport.app */;
@@ -236,6 +253,10 @@
 			);
 			mainGroup = DF7D7F23950A94AF404FA184;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				E5F2FCC664582A3CEAB96674 /* XCRemoteSwiftPackageReference "Inject" */,
+				21BEAF3EA72846118D0DAD54 /* XCRemoteSwiftPackageReference "InjectionLite" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1255E53788BB8F3D090E631F /* Products */;
 			projectDirPath = "";
@@ -273,8 +294,8 @@
 				977F8658FA1B1BB0089517CC /* GatewayStore.swift in Sources */,
 				CEAE75AEAA0FCB96816535D1 /* HealthExportApp.swift in Sources */,
 				9D085E6E25C504BAEFC5464D /* JSONCoding.swift in Sources */,
+				B4622EB98765E78066177720 /* LiveMapView.swift in Sources */,
 				0DE5D680E802B69A6EAD4465 /* NetworkDispatcher.swift in Sources */,
-				542BA1D7700E57E17D280AC9 /* PhoneConnectivityService.swift in Sources */,
 				7C5F61A5F512409639AE4A0A /* PipelineSettings.swift in Sources */,
 				C6B2040B7A608FABD9E73E97 /* PipelineSettingsStore.swift in Sources */,
 				657A5341EBC4846119184B36 /* RootView.swift in Sources */,
@@ -303,12 +324,14 @@
 				CODE_SIGN_ENTITLEMENTS = HealthExport/HealthExport.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(PLATFORM_DIR)/Developer/Library/Frameworks";
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = HealthExport/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-Xlinker -interposable -ObjC -weak_framework XCTest";
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.k69sknk.healthexport;
 				PRODUCT_NAME = "Health Export";
 				SDKROOT = iphoneos;
@@ -522,6 +545,38 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		21BEAF3EA72846118D0DAD54 /* XCRemoteSwiftPackageReference "InjectionLite" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/johnno1962/InjectionLite";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.3;
+			};
+		};
+		E5F2FCC664582A3CEAB96674 /* XCRemoteSwiftPackageReference "Inject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzysztofzablocki/Inject";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		919907E0EE43E5BDCA08903D /* InjectionLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 21BEAF3EA72846118D0DAD54 /* XCRemoteSwiftPackageReference "InjectionLite" */;
+			productName = InjectionLite;
+		};
+		BB9D3005F550CE64516525CC /* Inject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E5F2FCC664582A3CEAB96674 /* XCRemoteSwiftPackageReference "Inject" */;
+			productName = Inject;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 309F11E5899C8C7536DC5D16 /* Project object */;
 }

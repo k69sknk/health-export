@@ -1,6 +1,13 @@
 import SwiftUI
+#if DEBUG
+import Inject
+#endif
 
 struct CatalogView: View {
+    #if DEBUG
+    @ObserveInjection private var inject
+    #endif
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -67,5 +74,8 @@ struct CatalogView: View {
             .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbarBackground(Palette.void, for: .navigationBar)
         }
+        #if DEBUG
+        .enableInjection()
+        #endif
     }
 }

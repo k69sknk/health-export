@@ -108,6 +108,7 @@ final class WorkoutRecorder: NSObject, ObservableObject {
             workoutSession.startActivity(with: sessionDate)
             try await workoutBuilder.beginCollection(at: sessionDate)
             state = .running
+            sendStarted()
         } catch {
             lastError = error.localizedDescription
         }
@@ -132,8 +133,22 @@ final class WorkoutRecorder: NSObject, ObservableObject {
         }
     }
 
-    private func tick() {
-        let metrics = LiveMetrics(
+    private func sendStarted() {
+        let envelope = WorkoutStartedEnvelope(
+            event: ConnectivityPacket.workoutStarted.rawValue,
+            workoutId: workoutId,
+            type: "running",
+            startDate: sessionDate,
+            userId: settings.userId,
+            startLocation: routePoints.last
+        )
+        if let data = try? JSONCoding.compactEncoder.encode(envelope) {
+            pending.insert(data, at: 0)
+            flush()
+        }
+    }
+
+    private func tick() {        let metrics = LiveMetrics(
             heartRate: settings.enabledMetrics.contains(.heartRate) ? heartRate : nil,
             speedMps: settings.enabledMetrics.contains(.speedPace) ? currentSpeed() : nil,
             paceSecPerKm: settings.enabledMetrics.contains(.speedPace) ? currentPace() : nil,

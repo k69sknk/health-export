@@ -1,6 +1,12 @@
 import SwiftUI
+#if DEBUG
+import Inject
+#endif
 
 struct SettingsView: View {
+    #if DEBUG
+    @ObserveInjection private var inject
+    #endif
     @EnvironmentObject private var store: PipelineSettingsStore
     @EnvironmentObject private var bridge: GatewayStore
 
@@ -20,6 +26,15 @@ struct SettingsView: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .tint(Palette.chartreuse)
+
+                    Button {
+                        bridge.sendTestPayload()
+                    } label: {
+                        Label("Envoyer une course de test au webhook", systemImage: "paperplane")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.bordered)
+                    .tint(Palette.celadon)
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 24)
@@ -29,6 +44,9 @@ struct SettingsView: View {
             .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbarBackground(Palette.void, for: .navigationBar)
         }
+        #if DEBUG
+        .enableInjection()
+        #endif
     }
 
     private var modeSection: some View {

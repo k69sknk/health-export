@@ -1,6 +1,12 @@
 import SwiftUI
+#if DEBUG
+import Inject
+#endif
 
 struct RootView: View {
+    #if DEBUG
+    @ObserveInjection private var inject
+    #endif
     @EnvironmentObject private var bridge: GatewayStore
     @EnvironmentObject private var settingsStore: PipelineSettingsStore
 
@@ -27,6 +33,9 @@ struct RootView: View {
             bridge.settings = newValue
             bridge.pushSettings()
         }
+        #if DEBUG
+        .enableInjection()
+        #endif
     }
 }
 

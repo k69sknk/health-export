@@ -11,6 +11,7 @@ final class WatchGateway: NSObject, ObservableObject, WCSessionDelegate {
     @Published var lastPacketSummary = "Aucun paquet"
 
     private var session: WCSession?
+    var onStarted: ((WorkoutStartedEnvelope) -> Void)?
     var onLive: ((LiveMetricsEnvelope) -> Void)?
     var onCompleted: ((WorkoutCompletedEnvelope) -> Void)?
 
@@ -81,6 +82,15 @@ final class WatchGateway: NSObject, ObservableObject, WCSessionDelegate {
     }
 
     private func handle(data: Data) {
+        if let started = try? JSONCoding.decoder.decode(WorkoutStartedEnvelope.self, from: data), started.event == ConnectivityPacket.workoutStarted.rawValue {
+            Task { @MainActor in
+                lastPacketAt = Date()
+                lastPacketSummary = "Départ · \(started.type)"
+                onStarted?(started)
+            }
+            return
+        }
+
         if let live = try? JSONCoding.decoder.decode(LiveMetricsEnvelope.self, from: data), live.event == ConnectivityPacket.liveMetrics.rawValue {
             Task { @MainActor in
                 lastPacketAt = Date()

@@ -1,6 +1,12 @@
 import SwiftUI
+#if DEBUG
+import Inject
+#endif
 
 struct DashboardView: View {
+    #if DEBUG
+    @ObserveInjection private var inject
+    #endif
     @EnvironmentObject private var bridge: GatewayStore
     @EnvironmentObject private var settingsStore: PipelineSettingsStore
 
@@ -13,6 +19,9 @@ struct DashboardView: View {
                 VStack(alignment: .leading, spacing: 22) {
                     header
                     watchPane
+                    if let run = bridge.activeRun, !run.points.isEmpty {
+                        LiveMapView(run: run)
+                    }
                     streamPane
                     runPane
                 }
@@ -25,6 +34,9 @@ struct DashboardView: View {
             .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbarBackground(Palette.void, for: .navigationBar)
         }
+        #if DEBUG
+        .enableInjection()
+        #endif
     }
 
     private var header: some View {

@@ -33,6 +33,15 @@ struct LiveMetricsEnvelope: Codable {
     var data: LiveMetrics
 }
 
+struct WorkoutStartedEnvelope: Codable {
+    var event: String
+    var workoutId: String
+    var type: String
+    var startDate: Date
+    var userId: String
+    var startLocation: GeoPoint?
+}
+
 struct WorkoutSummary: Codable {
     var totalDistanceM: Double
     var durationSeconds: Double
@@ -54,6 +63,7 @@ struct WorkoutCompletedEnvelope: Codable {
 }
 
 enum ConnectivityPacket: String {
+    case workoutStarted = "workout_started"
     case liveMetrics = "live_metrics"
     case workoutCompleted = "workout_completed"
     case settingsSync = "settings_sync"
